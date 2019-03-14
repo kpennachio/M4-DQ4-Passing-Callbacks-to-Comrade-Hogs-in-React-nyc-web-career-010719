@@ -19,22 +19,36 @@ export default class GalaxySNote7 extends React.Component {
   }
 
   throwAFit = () => {
-  }
+    this.props.alterEnvironment('inhospitable');
+    this.setState({
+      panicked: true
+    });
+    this.exclaim();
+  };
 
   relax = () => {
+    setTimeout(
+      () => {
+        this.setState(
+          {panicked: false}
+        );
+        this.props.relax();
+      },
+    2000)
   }
 
   exclaim = () => {
     if (this.state.panicked) return
     this.exclaimAudio.play()
     this.squeelAudio.play()
-  }
+    this.relax()
+  };
 
   panic = () => (<img id="galaxy-exclamation" className="exclamation" src={exclamation} alt="" />)
 
   render() {
     return(
-      <div id="galaxy-s-note" onClick={this.exclaim}>
+      <div id="galaxy-s-note" onClick={this.throwAFit}>
         {(this.state.panicked) ? this.panic() : null}
       </div>
     )
